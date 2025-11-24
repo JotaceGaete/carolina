@@ -1,0 +1,22 @@
+import { type NextRequest, NextResponse } from 'next/server'
+
+export async function middleware(request: NextRequest) {
+  // NOTA: Middleware simplificado - La protección de rutas se hace en el cliente
+  // Esto es porque @supabase/ssr tiene problemas leyendo cookies en el middleware
+  console.log('🔄 Middleware:', request.nextUrl.pathname)
+  return NextResponse.next()
+}
+
+export const config = {
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     * - public folder
+     */
+    '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+  ],
+}
+
